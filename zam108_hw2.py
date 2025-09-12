@@ -53,27 +53,33 @@ def gaussElimin(a,b):
 #a=np.array([[8.0,-6.0,2.0],[-4.0,11.0,-7.0],[4.0,-7.0,6.0]])
 #b=np.array([28.0,-40.0,33.0])
 
-a = np.array(([3.0, -1.0, 0.0, 0.0],[0.0,0.0,-1.0,1.0],[0.0,-1.0,3.0,-1.0],[-1.0, 3.0, -1.0, 0.0]))
-b = np.array([1.0, 0.0, 0.0, 0.0])
+a=np.array([[3., -1., 0., 0.], [0.,0.,-1.,1.], [0.,-1.,3.,-1.], [-1., 3., -1., 0.]])
+b = np.array([1., 0., 0., 0.])
 acopy = a.copy()
 bcopy = b.copy()
 
-if np.any(np.isnan(gaussElimin(a,b))):
-    print(a)
-    print("row swap:")
+x=gaussPivot(acopy,bcopy)
 
-    a = swapRows(a,1,2)
-    b = swapRows(b,1,2)
+print(x)
 
-    print(a)
-    print(b)
 
-print(gaussElimin(a,b))
+print("\nCheck: Ax")
+print(np.dot(a,x))
 #print(a)
 #print(acopy)
 
+I = np.array([[1.,0.,0.,0.,], [0., 1., 0., 0.,], [0., 0., 1., 0.], [0., 0., 0., 1.]])
+Icopy = np.copy(I)
 
-'''c=np.array([[2.,1.],[2.,1.001]])
-d=np.array([3.,0.])
-print(gaussElimin(c,d))'''
+n = a.shape[0]
+x = np.zeros((n,n))
+for j in range(n):
+    e = I[:,j]
+    x[:, j] = gaussPivot(a.copy(),e.copy())
+#x=gaussElimin(acopy,Icopy)
+print("\n")
+print(x)
 
+
+print("\nCheck: Ax")
+print(np.dot(a,x))
